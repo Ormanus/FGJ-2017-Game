@@ -40,53 +40,99 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleInput()
     {
+        HandleRotation();
+        HandleSpeed();
+        Vector3 moveVector = new Vector3(0, 0, _curSpeed);
+        transform.Translate(moveVector);
+        transform.Rotate(0, _curRotation * _rotationSpeed, 0);
+
+    }
+
+    private void HandleRotation()
+    {
         if (Input.GetKey(_leftKey))
         {
-            _curRotation = -_rotationSpeed;
+            if (_curRotation <= -_rotationSpeed)
+            {
+                _curRotation = -_rotationSpeed;
+            }
+            else
+            {
+                _curRotation -= Math.Abs(_rotationSpeed + _curRotation) * Time.deltaTime;
+            }
         }
         else if (Input.GetKey(_rightKey))
         {
-            _curRotation = _rotationSpeed;
+            if (_curRotation >= _rotationSpeed)
+            {
+                _curRotation = _rotationSpeed;
+            }
+            else
+            {
+                _curRotation += Math.Abs(_rotationSpeed - _curRotation) * Time.deltaTime;
+            }
         }
+        else
+        {
+            if (_curRotation >= -0.25f && _curRotation <= 0.25f)
+            {
+                _curRotation = 0;
+            }
+            else
+            {
+                if (_curRotation < 0)
+                {
+                    _curRotation += Time.deltaTime * _rotationSlowRate;
+                }
+                else if (_curRotation > 0)
+                {
+                    _curRotation -= Time.deltaTime * _rotationSlowRate;
+                }
+            }
+        }
+    }
 
+    private void HandleSpeed()
+    {
         if (Input.GetKey(_downKey))
         {
-            _curSpeed = -_speed;
+            if (_curSpeed <= -_speed)
+            {
+                _curSpeed = -_speed;
+            }
+            else
+            {
+                _curSpeed -= _speed * Time.deltaTime; ;
+            }
         }
         else if (Input.GetKey(_upKey))
         {
-            _curSpeed = _speed;
+            if (_curSpeed >= _speed)
+            {
+                _curSpeed = _speed;
+            }
+            else
+            {
+                _curSpeed += _speed * Time.deltaTime; ;
+            }
         }
-
-        if (_curSpeed <= 0)
+        else
         {
-            _curSpeed += Time.deltaTime;
+            if (_curSpeed >= -1.5f && _curSpeed <= 1.5f)
+            {
+                _curSpeed = 0;
+            }
+            else
+            {
+                if (_curSpeed < 0)
+                {
+                    _curSpeed += Time.deltaTime * _speedSlowRate;
+                }
+                else if (_curSpeed > 0)
+                {
+                    _curSpeed -= Time.deltaTime * _speedSlowRate;
+                }
+            }
         }
-        else if (_curSpeed >= 0)
-        {
-            _curSpeed -= Time.deltaTime;
-        }
-        else if (_curSpeed >= -0.05f && _curSpeed <= 0.05f)
-        {
-            _curSpeed = 0;
-        }
-
-        if (_curRotation <= 0)
-        {
-            _curRotation += Time.deltaTime;
-        }
-        else if (_curRotation >= 0)
-        {
-            _curRotation -= Time.deltaTime;
-        }
-        else if (_curRotation >= -0.05f && _curRotation <= 0.05f)
-        {
-            _curRotation = 0;
-        }
-
-        Vector3 moveVector = new Vector3(0, 0, _curSpeed);
-        transform.Translate(moveVector.normalized * _curSpeed * Time.deltaTime);
-        transform.Rotate(0, _curRotation * _rotationSpeed, 0);
-
     }
 }
