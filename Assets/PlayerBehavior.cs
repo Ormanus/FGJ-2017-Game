@@ -5,9 +5,13 @@ using System.Collections;
 public class PlayerBehavior : MonoBehaviour {
 
     [SerializeField]
-    private TeamUtility.IO.PlayerID _playerID;
+    private float _rotationSpeed;
     [SerializeField]
     private float _speed;
+    [SerializeField]
+    private float _rotationSlowRate;
+    [SerializeField]
+    private float _speedSlowRate;
     [SerializeField]
     private KeyCode _upKey;
     [SerializeField]
@@ -18,6 +22,10 @@ public class PlayerBehavior : MonoBehaviour {
     private KeyCode _rightKey;
     [SerializeField]
     private KeyCode _actionKey;
+
+    public float _curSpeed = 0f;
+    public float _curRotation = 0f;
+
 
     // Use this for initialization
     void Start () {
@@ -32,37 +40,53 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleInput()
     {
-        float horDir = 0f;
-        float verDir = 0f;
         if (Input.GetKey(_leftKey))
         {
-            horDir = -1;
+            _curRotation = -_rotationSpeed;
         }
         else if (Input.GetKey(_rightKey))
         {
-            horDir = 1;
-        }
-        else
-        {
-            horDir = TeamUtility.IO.InputManager.GetAxis("Left Stick Horizontal", _playerID);
+            _curRotation = _rotationSpeed;
         }
 
         if (Input.GetKey(_downKey))
         {
-            verDir = -1;
+            _curSpeed = -_speed;
         }
         else if (Input.GetKey(_upKey))
         {
-            verDir = 1;
-        }
-        else
-        {
-            TeamUtility.IO.InputManager.GetAxis("Left Stick Vertical", _playerID);
+            _curSpeed = _speed;
         }
 
-        Vector3 moveVector = new Vector3(0, 0, verDir);
-        transform.Translate(moveVector.normalized * _speed * Time.deltaTime);
-        transform.Rotate(0, horDir*10, 0);
+        if (_curSpeed <= 0)
+        {
+            _curSpeed += Time.deltaTime;
+        }
+        else if (_curSpeed >= 0)
+        {
+            _curSpeed -= Time.deltaTime;
+        }
+        else if (_curSpeed >= -0.05f && _curSpeed <= 0.05f)
+        {
+            _curSpeed = 0;
+        }
+
+        if (_curRotation <= 0)
+        {
+            _curRotation += Time.deltaTime;
+        }
+        else if (_curRotation >= 0)
+        {
+            _curRotation -= Time.deltaTime;
+        }
+        else if (_curRotation >= -0.05f && _curRotation <= 0.05f)
+        {
+            _curRotation = 0;
+        }
+
+        Vector3 moveVector = new Vector3(0, 0, _curSpeed);
+        transform.Translate(moveVector.normalized * _curSpeed * Time.deltaTime);
+        transform.Rotate(0, _curRotation * _rotationSpeed, 0);
 
     }
 }
