@@ -1,41 +1,30 @@
 fileFormatVersion: 2
-guid: b4cfe59ec0fd4894eab44758a0e97b50
-timeCreated: 1485006417
+guid: 85656ff061670e443ba55b1f20c2d452
+timeCreated: 1485015399
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Armature
-    100002: Bone.001
-    100004: Bone.002
-    100006: Bone.002_end
-    100008: Bone.004
-    100010: Bone.005
-    100012: Bone.005_end
-    100014: Bone.006
-    100016: Bone.006_end
-    100018: Bone.007
-    100020: Bone.007_end
-    100022: Cylinder
-    100024: //RootNode
+    100002: Bone_001
+    100004: Bone_002
+    100006: Bone_004
+    100008: Bone_005
+    100010: Bone_006
+    100012: Bone_007
+    100014: Cylinder
+    100016: //RootNode
     400000: Armature
-    400002: Bone.001
-    400004: Bone.002
-    400006: Bone.002_end
-    400008: Bone.004
-    400010: Bone.005
-    400012: Bone.005_end
-    400014: Bone.006
-    400016: Bone.006_end
-    400018: Bone.007
-    400020: Bone.007_end
-    400022: Cylinder
-    400024: //RootNode
+    400002: Bone_001
+    400004: Bone_002
+    400006: Bone_004
+    400008: Bone_005
+    400010: Bone_006
+    400012: Bone_007
+    400014: Cylinder
+    400016: //RootNode
     4300000: Cylinder
-    7400000: Armature|Armature.001|Armature|ArmatureAction|Armature|ArmatureAction
-    7400002: Armature|Armature|Armature|ArmatureAction|Armature|ArmatureAction
-    7400004: Armature|Armature|Armature|ArmatureAction|Armature|ArmatureAction.001
-    7400006: Armature|Armature|Armature|PoseLib|Armature|PoseLib
+    7400000: Default Take
     9500000: //RootNode
     13700000: Cylinder
   materials:
@@ -45,7 +34,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleRotations: 1
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
