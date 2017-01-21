@@ -5,6 +5,12 @@ using System.Collections;
 public class PlayerBehavior : MonoBehaviour {
 
     [SerializeField]
+    private Transform _playerModel;
+    [SerializeField]
+    private Vector3 _offset;
+    [SerializeField]
+    private float _radius;
+    [SerializeField]
     private float _rotationSpeed;
     [SerializeField]
     private float _speed;
@@ -27,11 +33,15 @@ public class PlayerBehavior : MonoBehaviour {
     public float _curRotation = 0f;
     public bool _isDoingAction = false;
 
+    private Vector3 _startPosition;
+
 
     // Use this for initialization
-    void Start () {
-	
-	}
+    void Start ()
+    {
+        _playerModel.localPosition = _offset;
+        _startPosition = transform.position;
+    }
 
     // Update is called once per frame
     private void Update()
@@ -41,6 +51,10 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleInput()
     {
+        if(_playerModel.position != _offset)
+        {
+            _playerModel.localPosition = _offset;
+        }
         HandleRotation();
         HandleSpeed();
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
@@ -61,6 +75,14 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 _curRotation -= _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
+            if(transform.position.x <= _startPosition.x - _radius)
+            {
+                transform.position = new Vector3(_startPosition.x - _radius, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                transform.Translate(_startPosition.x - _rotationSpeed, 0,0);
+            }
         }
         else if (Input.GetKey(_rightKey))
         {
@@ -71,6 +93,14 @@ public class PlayerBehavior : MonoBehaviour {
             else
             {
                 _curRotation += _rotationSpeed * _rotationSlowRate * Time.deltaTime;
+            }
+            if (transform.position.x >= _startPosition.x + _radius)
+            {
+                transform.position = new Vector3(_startPosition.x + _radius, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                transform.Translate(_startPosition.x + _rotationSpeed, 0, 0);
             }
         }
         else
@@ -145,7 +175,7 @@ public class PlayerBehavior : MonoBehaviour {
     IEnumerator action()
     {
         _isDoingAction = true;
-        bool isGoingUp = true;
+        bool isAnimating = true;
         while(_isDoingAction)
         {
 
