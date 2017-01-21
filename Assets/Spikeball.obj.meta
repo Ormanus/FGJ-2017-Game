@@ -1,39 +1,17 @@
 fileFormatVersion: 2
-guid: 600f663dfae304a46bed46404a1fbf91
-timeCreated: 1484954535
+guid: d178cece5da8ecd4bbba75e5647ba6e9
+timeCreated: 1484948870
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Armature
-    100002: Bone.001
-    100004: Bone.002
-    100006: Bone.002_end
-    100008: Bone.004
-    100010: Bone.005
-    100012: Bone.005_end
-    100014: Bone.006
-    100016: Bone.006_end
-    100018: Bone.007
-    100020: Bone.007_end
-    100022: Cylinder
-    100024: //RootNode
-    400000: Armature
-    400002: Bone.001
-    400004: Bone.002
-    400006: Bone.002_end
-    400008: Bone.004
-    400010: Bone.005
-    400012: Bone.005_end
-    400014: Bone.006
-    400016: Bone.006_end
-    400018: Bone.007
-    400020: Bone.007_end
-    400022: Cylinder
-    400024: //RootNode
-    4300000: Cylinder
-    9500000: //RootNode
-    13700000: Cylinder
+    100000: default
+    100002: //RootNode
+    400000: default
+    400002: //RootNode
+    2300000: default
+    3300000: default
+    4300000: default
   materials:
     importMaterials: 1
     materialName: 0
@@ -92,7 +70,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
