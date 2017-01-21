@@ -15,7 +15,7 @@ public class Water : MonoBehaviour
 
     private List<Wave> waves;
 
-    private float[] grid;
+    private float[] y;
 
     private int width;
     private int height;
@@ -30,8 +30,7 @@ public class Water : MonoBehaviour
         width =  122;
         height = 122;
 
-        //grid = new float[width * height];
-
+        y = new float[width * height];
 
         Vector3[] vertices = new Vector3[width * height * 4];
 
@@ -41,6 +40,8 @@ public class Water : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
+                y[i * height + j] = 0.0f;
+
                 vertices[(i * width + j) * 4 + 0] = new Vector3(i - 0.5f, 0, j - 0.5f);
                 vertices[(i * width + j) * 4 + 1] = new Vector3(i - 0.5f, 0, j + 0.5f);
                 vertices[(i * width + j) * 4 + 2] = new Vector3(i + 0.5f, 0, j + 0.5f);
@@ -62,7 +63,31 @@ public class Water : MonoBehaviour
 
         gameObject.AddComponent<MeshFilter>().mesh = mesh;
         gameObject.AddComponent<MeshRenderer>().material = mat;
-        gameObject.AddComponent<MeshCollider>();
+        //gameObject.AddComponent<MeshCollider>();
+
+        //GameObject.FindGameObjectWithTag("Platform").GetComponent<Rigidbody>().
+    }
+
+    void FixedUpdate()
+    {
+        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                //check collisions
+                Vector3 vertex = new Vector3(i, y[i * height + j], j);
+                Vector3 n = plat.transform.up; //normal of the plane
+                float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
+                Vector3 collision = new Vector3(0, d, 0) + vertex;
+                Vector3 radius = plat.transform.position - collision;
+                if (d < 0 && radius.magnitude < 25)
+                {
+                    plat.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 1.1f, 0) * -d / 200.0f, collision);
+                }
+            }
+        }
     }
 
     void Update()
@@ -101,12 +126,11 @@ public class Water : MonoBehaviour
             }
         }
 
-        float[] y = new float[width * height];
-
-        for(int i = 0; i < width; i++)
+        for (int i = 0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
+                y[i * height + j] = 0.0f;
                 foreach (Wave w in waves)
                 {
                     Vector2 delta = w.center - new Vector2(i, j); //delta
@@ -175,6 +199,6 @@ public class Water : MonoBehaviour
 
         gameObject.GetComponent<MeshFilter>().mesh = mesh;
 
-        gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+        //gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 }
