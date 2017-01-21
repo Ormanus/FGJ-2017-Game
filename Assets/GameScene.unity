@@ -172,7 +172,7 @@ Transform:
   m_GameObject: {fileID: 63616791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 61, y: 5, z: 61}
-  m_LocalScale: {x: 50, y: 10, z: 50}
+  m_LocalScale: {x: 50, y: 5, z: 50}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &111523009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,8 +241,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 226628194}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: 0, y: 0, z: 345}
-  m_LocalScale: {x: 1000, y: 1000, z: 1000}
+  m_LocalPosition: {x: 61, y: 0, z: 61}
+  m_LocalScale: {x: 250, y: 250, z: 250}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children:
   - {fileID: 845342460}
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerModel: {fileID: 845342460}
-  _offset: {x: 0, y: 0, z: 0}
+  _offset: {x: 0, y: 0, z: -0.1}
   _radius: 0
   _rotationSpeed: 2
   _speed: 3
@@ -426,7 +426,7 @@ BoxCollider:
   m_GameObject: {fileID: 845342459}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.025, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
@@ -463,7 +463,7 @@ Transform:
   m_GameObject: {fileID: 1116623812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1384567313}
@@ -502,7 +502,7 @@ BoxCollider:
   m_GameObject: {fileID: 1116623812}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.025, z: 0.05}
   m_Center: {x: 0, y: 0, z: 0}
@@ -595,8 +595,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1384567312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 0, z: 100}
-  m_LocalScale: {x: 1000, y: 1000, z: 1000}
+  m_LocalPosition: {x: 61, y: 0, z: 61}
+  m_LocalScale: {x: 250, y: 250, z: 250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1116623813}
@@ -614,8 +614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerModel: {fileID: 1116623813}
-  _offset: {x: 0, y: 0, z: -0.05}
-  _radius: 0.05
+  _offset: {x: 0, y: 0, z: -0.1}
+  _radius: 100
   _rotationSpeed: 2
   _speed: 3
   _rotationSlowRate: 2

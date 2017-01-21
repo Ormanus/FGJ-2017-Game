@@ -75,6 +75,7 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 _curRotation -= _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
+            /*
             if(transform.position.x <= _startPosition.x - _radius)
             {
                 transform.position = new Vector3(_startPosition.x - _radius, transform.position.y, transform.position.z);
@@ -83,6 +84,7 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 transform.Translate(_startPosition.x - _rotationSpeed, 0,0);
             }
+            */
         }
         else if (Input.GetKey(_rightKey))
         {
@@ -94,6 +96,7 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 _curRotation += _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
+            /*
             if (transform.position.x >= _startPosition.x + _radius)
             {
                 transform.position = new Vector3(_startPosition.x + _radius, transform.position.y, transform.position.z);
@@ -102,6 +105,7 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 transform.Translate(_startPosition.x + _rotationSpeed, 0, 0);
             }
+            */
         }
         else
         {
