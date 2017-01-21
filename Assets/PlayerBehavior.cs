@@ -29,6 +29,9 @@ public class PlayerBehavior : MonoBehaviour {
     [SerializeField]
     private KeyCode _actionKey;
 
+    public int minRotation;
+    public int maxRotation;
+
     public float _curSpeed = 0f;
     public float _curRotation = 0f;
     public bool _isDoingAction = false;
@@ -62,13 +65,14 @@ public class PlayerBehavior : MonoBehaviour {
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
         transform.Translate(moveVector);
         transform.Rotate(0, _curRotation * _rotationSpeed, 0);
-        if(transform.rotation.y < _startRotation.y - 70)
+
+        if (transform.eulerAngles.y < minRotation)
         {
-            transform.rotation = new Quaternion(transform.rotation.x, _startRotation.y + 70, transform.rotation.z, transform.rotation.w);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, minRotation, transform.eulerAngles.z);
         }
-        if (transform.rotation.y > _startRotation.y + 70)
+        if (transform.eulerAngles.y > maxRotation)
         {
-            transform.rotation = new Quaternion(transform.rotation.x, _startRotation.y + 70, transform.rotation.z, transform.rotation.w);
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, maxRotation, transform.eulerAngles.z);
         }
 
     }
