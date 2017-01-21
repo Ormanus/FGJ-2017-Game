@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class BallFalling : MonoBehaviour {
 
     int p1Points, p2Points;
     float timer;
-
+    public Text P1Points;
+    public Text P2Points;
 	// Use this for initialization
 	void Start () {
         p1Points = 0;
@@ -16,6 +18,8 @@ public class BallFalling : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        P1Points.text = "Player 1 Points: " + p1Points;
+        P2Points.text = "Player 2 Points: " + p2Points;
         if(timer > 0)
         {
             timer -= Time.deltaTime;
