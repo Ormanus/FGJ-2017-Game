@@ -64,6 +64,7 @@ public class PlayerBehavior : MonoBehaviour {
         HandleSpeed();
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
         _playerModel.Translate(moveVector);
+        _playerModel.localEulerAngles = new Vector3(0, -_curRotation * 25, 0);
         transform.Rotate(0, _curRotation * _rotationSpeed, 0);
 
         if (transform.eulerAngles.y < minRotation)
