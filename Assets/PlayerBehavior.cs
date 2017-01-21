@@ -213,7 +213,7 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 yield return new WaitForSeconds(0.8f);
                 GetComponent<AudioSource>().Play();
-                GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("WaveGun").transform.position.x + 15.0f, transform.FindChild("WaveGun").transform.position.z + 15.0f));
+                GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.x, transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.z));
                 animator.SetBool("Animate", false);
                 yield return new WaitForSeconds(0.8f);
                 _isDoingAction = false;

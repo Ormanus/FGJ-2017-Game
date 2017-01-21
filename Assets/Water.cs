@@ -24,7 +24,7 @@ public class Water : MonoBehaviour
 
     private Vector2 squareSize;
     private List<Wave> waves;
-    private float[] y;
+    private float[,] y;
 
     private float direction;
 
@@ -34,12 +34,12 @@ public class Water : MonoBehaviour
 
     public void SpawnWave(Vector2 position)
     {
+        Debug.Log(position.x + ", " + position.y);
         Wave w = new Wave();
         w.center = position;
         w.strength = 10.0f;
         w.radius = 0.0f;
         waves.Add(w);
-        Debug.Log("Wave Created @ " + position.x + ", " + position.y);
     }
 
     public void Reset(float time)
@@ -61,7 +61,7 @@ public class Water : MonoBehaviour
 
         waves = new List<Wave>();
 
-        y = new float[width * height];
+        y = new float[width,height];
 
         Vector3[] vertices = new Vector3[width * height * 4];
 
@@ -71,7 +71,7 @@ public class Water : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                y[i * height + j] = 0.0f;
+                y[i, j] = 0.0f;
 
                 vertices[(i * width + j) * 4 + 0] = new Vector3((i - 0.5f)*squareSize.x, 0, (j - 0.5f) * squareSize.y);
                 vertices[(i * width + j) * 4 + 1] = new Vector3((i - 0.5f)*squareSize.x, 0, (j + 0.5f) * squareSize.y);
@@ -112,7 +112,7 @@ public class Water : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 //check collisions
-                Vector3 vertex = new Vector3(i * squareSize.x, y[i * height + j], j * squareSize.y);
+                Vector3 vertex = new Vector3(i * squareSize.x, y[i, j], j * squareSize.y);
                 Vector3 n = plat.transform.up; //normal of the plane
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
@@ -138,9 +138,12 @@ public class Water : MonoBehaviour
 
             if(resetTimer < 0)
             {
-                for(int i = 0; i < width * height; i++)
+                for(int i = 0; i < width; i++)
                 {
-                    y[i] = 0;
+                    for (int j = 0; j < height; ++j)
+                    {
+                        y[i,j] = 0;
+                        }
                 }
                 waves.Clear();
                 return;
@@ -178,20 +181,20 @@ public class Water : MonoBehaviour
                 
                 if (resetTimer > 0)
                 {
-                    y[i * height + j] *= (1.0f - dt);
+                    y[i, j] *= (1.0f - dt);
                 }
                 else
                 {
-                    y[i * height + j] = 0.0f;
+                    y[i, j] = 0.0f;
 
                     foreach (Wave w in waves)
                     {
-                        Vector2 delta = w.center - new Vector2(i, j); //delta
+                        Vector2 delta = w.center - new Vector2(i * squareSize.x, j * squareSize.y); //delta
                         float distance = delta.magnitude;
-                        float distanceToCircle = Mathf.Abs(distance - w.radius);
+                        float distanceToCircle = Mathf.Abs(w.radius - distance);
                         if (distanceToCircle < 4)
                         {
-                            y[i * height + j] += 4 - distanceToCircle;
+                            y[i, j] += 4 - distanceToCircle;
                         }
                     }
                 }
@@ -208,10 +211,10 @@ public class Water : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                float y1 = y[i * height + j];
+                float y1 = y[i, j];
 
                 //check collisions
-                Vector3 vertex = new Vector3(i * squareSize.x, y[i * height + j], j * squareSize.y);
+                Vector3 vertex = new Vector3(i * squareSize.x, y[i, j], j * squareSize.y);
                 Vector3 n = plat.transform.up; //normal of the plane
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
