@@ -451,6 +451,7 @@ GameObject:
   - 33: {fileID: 1116623816}
   - 65: {fileID: 1116623815}
   - 23: {fileID: 1116623814}
+  - 95: {fileID: 1116623817}
   m_Layer: 0
   m_Name: PlayerModel_1
   m_TagString: Untagged
@@ -516,6 +517,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116623812}
   m_Mesh: {fileID: 4300000, guid: c3d035df2c758f94e93ac15071632357, type: 3}
+--- !u!95 &1116623817
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1116623812}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c3d035df2c758f94e93ac15071632357, type: 3}
+  m_Controller: {fileID: 9100000, guid: 300713ca6e24ccd4185fb8d56756f7d9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1278305128
 GameObject:
   m_ObjectHideFlags: 0
