@@ -139,6 +139,11 @@ public class PlayerBehavior : MonoBehaviour {
                 }
             }
         }
+
+        if (Input.GetKey(_actionKey))
+        {
+            HandleAction();
+        }
     }
 
     private void HandleSpeed()
@@ -187,16 +192,22 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleAction()
     {
-
+        StartCoroutine("action");
     }
 
     IEnumerator action()
     {
         _isDoingAction = true;
-        bool isAnimating = true;
-        while(_isDoingAction)
+        Animator animator = _playerModel.gameObject.GetComponent<Animator>();
+        animator.SetBool("Animate", true);
+        while (_isDoingAction)
         {
-
+            if(!animator.GetBool("Animate"))
+            {
+                _isDoingAction = false;
+                Debug.Log("SPLASH");
+            }
+            yield return null;
         }
         yield return null;
     }

@@ -206,6 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat: {fileID: 2100000, guid: 16716af7ac21a8544b671f39f75db591, type: 2}
+  platformRadius: 0
 --- !u!4 &111523010
 Transform:
   m_ObjectHideFlags: 0
@@ -525,11 +526,11 @@ Animator:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116623812}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: c3d035df2c758f94e93ac15071632357, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 300713ca6e24ccd4185fb8d56756f7d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
