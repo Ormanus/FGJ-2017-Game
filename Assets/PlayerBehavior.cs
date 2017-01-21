@@ -34,6 +34,7 @@ public class PlayerBehavior : MonoBehaviour {
     public bool _isDoingAction = false;
 
     private Vector3 _startPosition;
+    private Quaternion _startRotation;
 
 
     // Use this for initialization
@@ -41,6 +42,7 @@ public class PlayerBehavior : MonoBehaviour {
     {
         _playerModel.localPosition = _offset;
         _startPosition = transform.position;
+        _startRotation = transform.rotation;
     }
 
     // Update is called once per frame
