@@ -12,6 +12,7 @@ public class Water : MonoBehaviour
 {
 
     public Material mat;
+    public float platformRadius;
 
     private List<Wave> waves;
 
@@ -82,7 +83,7 @@ public class Water : MonoBehaviour
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
                 Vector3 radius = plat.transform.position - collision;
-                if (d < 0 && radius.magnitude < 25)
+                if (d < 0 && radius.magnitude < platformRadius)
                 {
                     plat.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 1.1f, 0) * -d / 200.0f, collision);
                 }
@@ -181,9 +182,13 @@ public class Water : MonoBehaviour
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
                 Vector3 radius = plat.transform.position - collision;
-                if (d < 0 && radius.magnitude < 25)
+                if (d < 0 && radius.magnitude < platformRadius)
                 {
                     y1 = collision.y;
+                    if(y1 < 0)
+                    {
+                        //y1 = 0.0f; //it's not a bug, it's a feature!
+                    }
                 }
 
                 vertices[i * width + j] = new Vector3(i - 0.5f, y1, j - 0.5f);
