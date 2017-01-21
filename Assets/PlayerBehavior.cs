@@ -63,16 +63,18 @@ public class PlayerBehavior : MonoBehaviour {
         HandleRotation();
         HandleSpeed();
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
-        transform.Translate(moveVector);
+        _playerModel.Translate(moveVector);
         transform.Rotate(0, _curRotation * _rotationSpeed, 0);
 
         if (transform.eulerAngles.y < minRotation)
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, minRotation, transform.eulerAngles.z);
+            _curRotation = 0;
         }
         if (transform.eulerAngles.y > maxRotation)
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, maxRotation, transform.eulerAngles.z);
+            _curRotation = 0;
         }
 
     }
@@ -172,7 +174,7 @@ public class PlayerBehavior : MonoBehaviour {
         }
         else
         {
-            if (_curSpeed >= (-_speed/10) && _curSpeed <= (_speed / 10))
+            if (_curSpeed >= (-_speed/15) && _curSpeed <= (_speed / 15))
             {
                 _curSpeed = 0;
             }
@@ -192,7 +194,10 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleAction()
     {
-        StartCoroutine("action");
+        if(!_isDoingAction)
+        {
+            StartCoroutine("action");
+        }
     }
 
     IEnumerator action()
@@ -200,15 +205,10 @@ public class PlayerBehavior : MonoBehaviour {
         _isDoingAction = true;
         Animator animator = _playerModel.gameObject.GetComponent<Animator>();
         animator.SetBool("Animate", true);
-        while (_isDoingAction)
-        {
-            if(!animator.GetBool("Animate"))
-            {
-                _isDoingAction = false;
-                Debug.Log("SPLASH");
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(2.8f);
+        Debug.Log("SPLASH");
+        animator.SetBool("Animate", false);
+        _isDoingAction = false;
         yield return null;
     }
 }

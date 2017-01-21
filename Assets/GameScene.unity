@@ -440,7 +440,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 845342459}
-  m_Mesh: {fileID: 4300000, guid: c3d035df2c758f94e93ac15071632357, type: 3}
+  m_Mesh: {fileID: 4300000, guid: b4cfe59ec0fd4894eab44758a0e97b50, type: 3}
 --- !u!1 &1116623812
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +517,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116623812}
-  m_Mesh: {fileID: 4300000, guid: c3d035df2c758f94e93ac15071632357, type: 3}
+  m_Mesh: {fileID: 4300000, guid: b4cfe59ec0fd4894eab44758a0e97b50, type: 3}
 --- !u!95 &1116623817
 Animator:
   serializedVersion: 3
@@ -526,7 +526,7 @@ Animator:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116623812}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: b4cfe59ec0fd4894eab44758a0e97b50, type: 3}
   m_Controller: {fileID: 9100000, guid: 300713ca6e24ccd4185fb8d56756f7d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -701,10 +701,10 @@ MonoBehaviour:
   _playerModel: {fileID: 1116623813}
   _offset: {x: 0, y: 0, z: -0.1}
   _radius: 100
-  _rotationSpeed: 2
-  _speed: 3
+  _rotationSpeed: 1
+  _speed: 10
   _rotationSlowRate: 2
-  _speedSlowRate: 2
+  _speedSlowRate: 10
   _upKey: 119
   _downKey: 115
   _leftKey: 97
