@@ -161,7 +161,7 @@ public class Water : MonoBehaviour
         //    pos.y = y;
         //    cube.transform.position = pos;
         //}
-
+        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
 
         Vector3[] vertices = new Vector3[width * height];
 
@@ -173,7 +173,20 @@ public class Water : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                vertices[i * width + j] = new Vector3(i - 0.5f, y[i * height + j], j - 0.5f);
+                float y1 = y[i * height + j];
+
+                //check collisions
+                Vector3 vertex = new Vector3(i, y[i * height + j], j);
+                Vector3 n = plat.transform.up; //normal of the plane
+                float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
+                Vector3 collision = new Vector3(0, d, 0) + vertex;
+                Vector3 radius = plat.transform.position - collision;
+                if (d < 0 && radius.magnitude < 25)
+                {
+                    y1 = collision.y;
+                }
+
+                vertices[i * width + j] = new Vector3(i - 0.5f, y1, j - 0.5f);
 
                 uvs[i * width + j] = new Vector2((float)i / width, (float)j / height);
             }
