@@ -61,7 +61,7 @@ public class PlayerBehavior : MonoBehaviour {
             _playerModel.localPosition = _offset;
         }
         HandleRotation();
-        HandleSpeed();
+        // HandleSpeed();
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
         _playerModel.Translate(moveVector);
         _playerModel.localEulerAngles = new Vector3(0, -_curRotation * 25, 0);
@@ -206,7 +206,7 @@ public class PlayerBehavior : MonoBehaviour {
         _isDoingAction = true;
         Animator animator = _playerModel.gameObject.GetComponent<Animator>();
         animator.SetBool("Animate", true);
-        yield return new WaitForSeconds(2.25f);
+        yield return new WaitForSeconds(1.5f);
         GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("WaveGun").transform.position.x + 15.0f, transform.FindChild("WaveGun").transform.position.z + 15.0f));
         animator.SetBool("Animate", false);
         _isDoingAction = false;
