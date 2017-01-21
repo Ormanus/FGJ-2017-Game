@@ -62,6 +62,14 @@ public class PlayerBehavior : MonoBehaviour {
         Vector3 moveVector = new Vector3(0, 0, _curSpeed);
         transform.Translate(moveVector);
         transform.Rotate(0, _curRotation * _rotationSpeed, 0);
+        if(transform.rotation.y < _startRotation.y - 70)
+        {
+            transform.rotation = new Quaternion(transform.rotation.x, _startRotation.y + 70, transform.rotation.z, transform.rotation.w);
+        }
+        if (transform.rotation.y > _startRotation.y + 70)
+        {
+            transform.rotation = new Quaternion(transform.rotation.x, _startRotation.y + 70, transform.rotation.z, transform.rotation.w);
+        }
 
     }
 
