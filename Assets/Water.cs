@@ -39,7 +39,7 @@ public class Water : MonoBehaviour
         w.strength = 10.0f;
         w.radius = 0.0f;
         waves.Add(w);
-        Debug.Log("Wave Created");
+        Debug.Log("Wave Created @ " + position.x + ", " + position.y);
     }
 
     public void Reset(float time)
@@ -97,6 +97,7 @@ public class Water : MonoBehaviour
 
         plat.transform.position = new Vector3(areaSize.x / 2, 3, areaSize.y / 2);
         GameObject.Find("Sphere").transform.position = new Vector3(areaSize.x / 2, 10, areaSize.y / 2);
+        GameObject.Find("Arena").transform.position = new Vector3(areaSize.x / 2, 0, areaSize.y / 2);
         //gameObject.AddComponent<MeshCollider>();
 
         //GameObject.FindGameObjectWithTag("Platform").GetComponent<Rigidbody>().

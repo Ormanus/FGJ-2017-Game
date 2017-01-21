@@ -206,8 +206,8 @@ public class PlayerBehavior : MonoBehaviour {
         _isDoingAction = true;
         Animator animator = _playerModel.gameObject.GetComponent<Animator>();
         animator.SetBool("Animate", true);
-        yield return new WaitForSeconds(2.8f);
-        Debug.Log("SPLASH");
+        yield return new WaitForSeconds(2.25f);
+        GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("WaveGun").transform.position.x + 15.0f, transform.FindChild("WaveGun").transform.position.z + 15.0f));
         animator.SetBool("Animate", false);
         _isDoingAction = false;
         yield return null;
