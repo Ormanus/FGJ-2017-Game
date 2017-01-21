@@ -14,22 +14,52 @@ public class Water : MonoBehaviour
     public Material mat;
     public float platformRadius;
 
-    private List<Wave> waves;
+    public int width; //squares on x axis
+    public int height;
 
+    public Vector2 areaSize;
+
+    public float forcePerVertex;
+
+
+    private Vector2 squareSize;
+    private List<Wave> waves;
     private float[] y;
 
-    private int width;
-    private int height;
-
     private float direction;
+
+    private float resetTimer;
+    private float resetTimerMax;
+    private float platResetDist;
+
+    public void SpawnWave(Vector2 position)
+    {
+        Wave w = new Wave();
+        w.center = position;
+        w.strength = 10.0f;
+        w.radius = 0.0f;
+        waves.Add(w);
+        Debug.Log("Wave Created");
+    }
+
+    public void Reset(float time)
+    {
+        resetTimer = time;
+        resetTimerMax = time;
+        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
+        platResetDist = plat.transform.position.y - 3;
+    }
 
     // Use this for initialization
     void Start()
     {
-        waves = new List<Wave>();
+        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
 
-        width =  122;
-        height = 122;
+        resetTimer = 0;
+
+        squareSize = new Vector2(areaSize.x / width, areaSize.y / height);
+
+        waves = new List<Wave>();
 
         y = new float[width * height];
 
@@ -43,10 +73,10 @@ public class Water : MonoBehaviour
             {
                 y[i * height + j] = 0.0f;
 
-                vertices[(i * width + j) * 4 + 0] = new Vector3(i - 0.5f, 0, j - 0.5f);
-                vertices[(i * width + j) * 4 + 1] = new Vector3(i - 0.5f, 0, j + 0.5f);
-                vertices[(i * width + j) * 4 + 2] = new Vector3(i + 0.5f, 0, j + 0.5f);
-                vertices[(i * width + j) * 4 + 3] = new Vector3(i + 0.5f, 0, j - 0.5f);
+                vertices[(i * width + j) * 4 + 0] = new Vector3((i - 0.5f)*squareSize.x, 0, (j - 0.5f) * squareSize.y);
+                vertices[(i * width + j) * 4 + 1] = new Vector3((i - 0.5f)*squareSize.x, 0, (j + 0.5f) * squareSize.y);
+                vertices[(i * width + j) * 4 + 2] = new Vector3((i + 0.5f)*squareSize.x, 0, (j + 0.5f) * squareSize.y);
+                vertices[(i * width + j) * 4 + 3] = new Vector3((i + 0.5f)*squareSize.x, 0, (j - 0.5f) * squareSize.y);
 
                 indices[i * width * 6 + j * 6 + 0] = (i * width + j) * 4 + 0;
                 indices[i * width * 6 + j * 6 + 1] = (i * width + j) * 4 + 1;
@@ -64,6 +94,9 @@ public class Water : MonoBehaviour
 
         gameObject.AddComponent<MeshFilter>().mesh = mesh;
         gameObject.AddComponent<MeshRenderer>().material = mat;
+
+        plat.transform.position = new Vector3(areaSize.x / 2, 3, areaSize.y / 2);
+        GameObject.Find("Sphere").transform.position = new Vector3(areaSize.x / 2, 10, areaSize.y / 2);
         //gameObject.AddComponent<MeshCollider>();
 
         //GameObject.FindGameObjectWithTag("Platform").GetComponent<Rigidbody>().
@@ -78,14 +111,14 @@ public class Water : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 //check collisions
-                Vector3 vertex = new Vector3(i, y[i * height + j], j);
+                Vector3 vertex = new Vector3(i * squareSize.x, y[i * height + j], j * squareSize.y);
                 Vector3 n = plat.transform.up; //normal of the plane
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
                 Vector3 radius = plat.transform.position - collision;
                 if (d < 0 && radius.magnitude < platformRadius)
                 {
-                    plat.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 1.1f, 0) * -d / 200.0f, collision);
+                    plat.GetComponent<Rigidbody>().AddForceAtPosition(new Vector3(0, 1.1f, 0) * -d * forcePerVertex, collision);
                 }
             }
         }
@@ -93,31 +126,41 @@ public class Water : MonoBehaviour
 
     void Update()
     {
-        float dt = Time.deltaTime * 2.0f;
+        float dt = Time.deltaTime;
+        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
+
+        if (resetTimer > 0)
+        {
+            resetTimer -= dt;
+
+            plat.transform.position = new Vector3(areaSize.x / 2, platResetDist * (resetTimer / resetTimerMax) + 3, areaSize.y / 2);
+
+            if(resetTimer < 0)
+            {
+                for(int i = 0; i < width * height; i++)
+                {
+                    y[i] = 0;
+                }
+                waves.Clear();
+                return;
+            }
+        }
 
         direction += dt;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Wave w = new Wave();
-            w.center = new Vector2(width / 2 + Mathf.Cos(direction) * (width / 2), height / 2 + Mathf.Sin(direction) * (width / 2));
-            w.strength = 10.0f;
-            w.radius = 0.0f;
-            waves.Add(w);
-            Debug.Log("Wave Created");
-
-            Wave w2 = new Wave();
-            w2.center = new Vector2(width / 2 + Mathf.Cos(direction + Mathf.PI / 2) * (width / 2), height / 2 + Mathf.Sin(direction + Mathf.PI / 2) * (width / 2));
-            w2.strength = 10.0f;
-            w2.radius = 0.0f;
-            waves.Add(w2);
-            Debug.Log("Wave2 Created");
+            float step = 3.14159265f * 2.0f / 5.0f / 10.0f;
+            for(int i = 0; i < 5; i++)
+            {
+                SpawnWave(new Vector2(width / 2 + Mathf.Cos(direction + (step * i)) * (width / 2), height / 2 + Mathf.Sin(direction + (step * i)) * (width / 2)));
+            }
         }
 
         for (int i = 0; i < waves.Count; i++)
         {
             Wave w = waves[i];
-            w.radius += dt * 4;
+            w.radius += dt * 8;
             waves[i] = w;
 
             if (waves[i].radius > width + width)
@@ -131,38 +174,28 @@ public class Water : MonoBehaviour
         {
             for(int j = 0; j < height; j++)
             {
-                y[i * height + j] = 0.0f;
-                foreach (Wave w in waves)
+                
+                if (resetTimer > 0)
                 {
-                    Vector2 delta = w.center - new Vector2(i, j); //delta
-                    float distance = delta.magnitude;//distance squared
-                    float distanceToCircle = Mathf.Abs(distance - w.radius);
-                    if (distanceToCircle < 4)
+                    y[i * height + j] *= (1.0f - dt);
+                }
+                else
+                {
+                    y[i * height + j] = 0.0f;
+
+                    foreach (Wave w in waves)
                     {
-                        y[i * height + j] += 4 - distanceToCircle;
+                        Vector2 delta = w.center - new Vector2(i, j); //delta
+                        float distance = delta.magnitude;
+                        float distanceToCircle = Mathf.Abs(distance - w.radius);
+                        if (distanceToCircle < 4)
+                        {
+                            y[i * height + j] += 4 - distanceToCircle;
+                        }
                     }
                 }
             }
         }
-
-        //GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cube");
-        //foreach (GameObject cube in cubes)
-        //{
-        //    Vector3 pos = cube.transform.position;
-        //    foreach (Wave w in waves)
-        //    {
-        //        Vector2 delta = w.center - new Vector2(pos.x, pos.z); //delta
-        //        float distance = delta.magnitude;//distance squared
-        //        float distanceToCircle = Mathf.Abs(distance - w.radius);
-        //        if (distanceToCircle < 4)
-        //        {
-        //            y += 4 - distanceToCircle;
-        //        }
-        //    }
-        //    pos.y = y;
-        //    cube.transform.position = pos;
-        //}
-        GameObject plat = GameObject.FindGameObjectWithTag("Platform");
 
         Vector3[] vertices = new Vector3[width * height];
 
@@ -177,7 +210,7 @@ public class Water : MonoBehaviour
                 float y1 = y[i * height + j];
 
                 //check collisions
-                Vector3 vertex = new Vector3(i, y[i * height + j], j);
+                Vector3 vertex = new Vector3(i * squareSize.x, y[i * height + j], j * squareSize.y);
                 Vector3 n = plat.transform.up; //normal of the plane
                 float d = Vector3.Dot((plat.transform.position - vertex), n) / Vector3.Dot(new Vector3(0, 1, 0), n);
                 Vector3 collision = new Vector3(0, d, 0) + vertex;
@@ -191,7 +224,7 @@ public class Water : MonoBehaviour
                     }
                 }
 
-                vertices[i * width + j] = new Vector3(i - 0.5f, y1, j - 0.5f);
+                vertices[i * width + j] = new Vector3((i - 0.5f) * squareSize.x, y1, (j - 0.5f) * squareSize.y);
 
                 uvs[i * width + j] = new Vector2((float)i / width, (float)j / height);
             }
