@@ -197,6 +197,7 @@ public class PlayerBehavior : MonoBehaviour {
     {
         if(!_isDoingAction)
         {
+            Debug.Log("DO IT");
             StartCoroutine("action");
         }
     }
@@ -206,10 +207,19 @@ public class PlayerBehavior : MonoBehaviour {
         _isDoingAction = true;
         Animator animator = _playerModel.gameObject.GetComponent<Animator>();
         animator.SetBool("Animate", true);
-        yield return new WaitForSeconds(1.5f);
-        GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("WaveGun").transform.position.x + 15.0f, transform.FindChild("WaveGun").transform.position.z + 15.0f));
-        animator.SetBool("Animate", false);
-        _isDoingAction = false;
+        while(_isDoingAction)
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Splash"))
+            {
+                yield return new WaitForSeconds(0.8f);
+                GetComponent<AudioSource>().Play();
+                GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("WaveGun").transform.position.x + 15.0f, transform.FindChild("WaveGun").transform.position.z + 15.0f));
+                animator.SetBool("Animate", false);
+                yield return new WaitForSeconds(0.8f);
+                _isDoingAction = false;
+            }
+            yield return null;
+        }
         yield return null;
     }
 }

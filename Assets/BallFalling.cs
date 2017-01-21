@@ -27,9 +27,17 @@ public class BallFalling : MonoBehaviour {
                 return;
         }
 
-        if (transform.position.y < -5.0f)
+        if (transform.position.y < 0f && transform.position.y > -1f)
         {
-            if(transform.position.z > 61)
+            if(!GetComponent<AudioSource>().isPlaying)
+            {
+                GetComponent<AudioSource>().Play();
+            }
+        }
+
+            if (transform.position.y < -5.0f)
+        {
+            if(transform.position.x > 50)
             {
                 p1Points++;
                 timer = 3.0f;
