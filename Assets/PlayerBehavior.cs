@@ -25,6 +25,7 @@ public class PlayerBehavior : MonoBehaviour {
 
     public float _curSpeed = 0f;
     public float _curRotation = 0f;
+    public bool _isDoingAction = false;
 
 
     // Use this for initialization
@@ -58,7 +59,7 @@ public class PlayerBehavior : MonoBehaviour {
             }
             else
             {
-                _curRotation -= Math.Abs(_rotationSpeed + _curRotation) * Time.deltaTime;
+                _curRotation -= _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
         }
         else if (Input.GetKey(_rightKey))
@@ -69,12 +70,12 @@ public class PlayerBehavior : MonoBehaviour {
             }
             else
             {
-                _curRotation += Math.Abs(_rotationSpeed - _curRotation) * Time.deltaTime;
+                _curRotation += _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
         }
         else
         {
-            if (_curRotation >= -0.25f && _curRotation <= 0.25f)
+            if (_curRotation >= (-_rotationSpeed/10) && _curRotation <= (_rotationSpeed / 10))
             {
                 _curRotation = 0;
             }
@@ -102,7 +103,7 @@ public class PlayerBehavior : MonoBehaviour {
             }
             else
             {
-                _curSpeed -= _speed * Time.deltaTime; ;
+                _curSpeed -= _speed * Time.deltaTime;
             }
         }
         else if (Input.GetKey(_upKey))
@@ -113,12 +114,12 @@ public class PlayerBehavior : MonoBehaviour {
             }
             else
             {
-                _curSpeed += _speed * Time.deltaTime; ;
+                _curSpeed += _speed * Time.deltaTime;
             }
         }
         else
         {
-            if (_curSpeed >= -1.5f && _curSpeed <= 1.5f)
+            if (_curSpeed >= (-_speed/10) && _curSpeed <= (_speed / 10))
             {
                 _curSpeed = 0;
             }
@@ -134,5 +135,21 @@ public class PlayerBehavior : MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void HandleAction()
+    {
+
+    }
+
+    IEnumerator action()
+    {
+        _isDoingAction = true;
+        bool isGoingUp = true;
+        while(_isDoingAction)
+        {
+
+        }
+        yield return null;
     }
 }
