@@ -34,7 +34,6 @@ public class Water : MonoBehaviour
 
     public void SpawnWave(Vector2 position)
     {
-        Debug.Log(position.x + ", " + position.y);
         Wave w = new Wave();
         w.center = position;
         w.strength = 10.0f;
@@ -169,7 +168,6 @@ public class Water : MonoBehaviour
 
             if (waves[i].radius > width + width)
             {
-                Debug.Log("Wave Removed");
                 waves.RemoveAt(i);
             }
         }

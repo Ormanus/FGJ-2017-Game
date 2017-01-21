@@ -25,6 +25,7 @@ public class BallFalling : MonoBehaviour {
             timer -= Time.deltaTime;
             if (timer < 0)
             {
+                GameObject.Find("WinnerText").GetComponent<Text>().text = "";
                 Respawn();
             }
             else
@@ -41,16 +42,16 @@ public class BallFalling : MonoBehaviour {
 
             if (transform.position.y < -5.0f)
         {
-            if(transform.position.x > 50)
+            if(transform.position.x > 100)
             {
                 p1Points++;
                 timer = 3.0f;
                 GameObject.Find("Water").GetComponent<Water>().Reset(3.0f);
-                Debug.Log("P1 points:" + p1Points);
+                GameObject.Find("WinnerText").GetComponent<Text>().text = "P1 SCORES";
                 if (p1Points > 5)
                 {
                     //p1 win
-                    Debug.Log("P1 Win");
+                    GameObject.Find("WinnerText").GetComponent<Text>().text = "P1 WINS";
                 }
             }
             else
@@ -58,11 +59,11 @@ public class BallFalling : MonoBehaviour {
                 p2Points++;
                 timer = 3.0f;
                 GameObject.Find("Water").GetComponent<Water>().Reset(3.0f);
-                Debug.Log("P2 points:" + p2Points);
+                GameObject.Find("WinnerText").GetComponent<Text>().text = "P2 SCORES";
                 if (p2Points > 5)
                 {
                     //p2 win
-                    Debug.Log("P2 Win");
+                    GameObject.Find("WinnerText").GetComponent<Text>().text = "P2 WINS";
                 }
             }
         }

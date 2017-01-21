@@ -197,7 +197,6 @@ public class PlayerBehavior : MonoBehaviour {
     {
         if(!_isDoingAction)
         {
-            Debug.Log("DO IT");
             StartCoroutine("action");
         }
     }
