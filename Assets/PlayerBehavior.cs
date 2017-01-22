@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerBehavior : MonoBehaviour {
 
@@ -39,6 +40,7 @@ public class PlayerBehavior : MonoBehaviour {
     private Vector3 _startPosition;
     private Quaternion _startRotation;
 
+    private float power;
 
     // Use this for initialization
     void Start ()
@@ -143,9 +145,19 @@ public class PlayerBehavior : MonoBehaviour {
             }
         }
 
-        if (Input.GetKey(_actionKey))
+        if (!_isDoingAction)
         {
-            HandleAction();
+            if (Input.GetKey(_actionKey) && power < 7.0f)
+            {
+                power += Time.deltaTime;
+                _playerModel.transform.localPosition = _offset + new Vector3(0.1f, 0, 0) * Mathf.Sin(power * power * 5.0f);
+
+            }
+            else if (power > 0.1f)
+            {
+                _playerModel.transform.localPosition = _offset;
+                HandleAction();
+            }
         }
     }
 
@@ -195,15 +207,16 @@ public class PlayerBehavior : MonoBehaviour {
 
     private void HandleAction()
     {
-        if(!_isDoingAction)
+        if (!_isDoingAction)
         {
+            StopCoroutine("action");
+            _isDoingAction = true;
             StartCoroutine("action");
         }
     }
 
     IEnumerator action()
     {
-        _isDoingAction = true;
         Animator animator = _playerModel.gameObject.GetComponent<Animator>();
         animator.SetBool("Animate", true);
         while(_isDoingAction)
@@ -212,7 +225,8 @@ public class PlayerBehavior : MonoBehaviour {
             {
                 yield return new WaitForSeconds(0.8f);
                 GetComponent<AudioSource>().Play();
-                GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.x, transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.z));
+                GameObject.Find("Water").GetComponent<Water>().SpawnWave(new Vector2(transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.x, transform.FindChild("killerSharkSoftenedColoured").FindChild("WaveGun").position.z), power * 2.0f);
+                power = 0;
                 animator.SetBool("Animate", false);
                 yield return new WaitForSeconds(0.8f);
                 _isDoingAction = false;

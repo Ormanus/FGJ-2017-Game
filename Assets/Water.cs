@@ -32,11 +32,11 @@ public class Water : MonoBehaviour
     private float resetTimerMax;
     private float platResetDist;
 
-    public void SpawnWave(Vector2 position)
+    public void SpawnWave(Vector2 position, float strength)
     {
         Wave w = new Wave();
         w.center = position;
-        w.strength = 10.0f;
+        w.strength = strength;
         w.radius = 0.0f;
         waves.Add(w);
     }
@@ -129,6 +129,7 @@ public class Water : MonoBehaviour
         float dt = Time.deltaTime;
         GameObject plat = GameObject.FindGameObjectWithTag("Platform");
 
+        //reset timer
         if (resetTimer > 0)
         {
             resetTimer -= dt;
@@ -149,6 +150,7 @@ public class Water : MonoBehaviour
             }
         }
 
+        //random wave genrator
         direction += dt;
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -156,17 +158,19 @@ public class Water : MonoBehaviour
             float step = 3.14159265f * 2.0f / 5.0f / 10.0f;
             for(int i = 0; i < 5; i++)
             {
-                SpawnWave(new Vector2(width / 2 + Mathf.Cos(direction + (step * i)) * (width / 2), height / 2 + Mathf.Sin(direction + (step * i)) * (width / 2)));
+                SpawnWave(new Vector2(areaSize.x / 2 + Mathf.Cos(direction + (step * i)) * (areaSize.x / 2), areaSize.y / 2 + Mathf.Sin(direction + (step * i)) * (areaSize.y / 2)), 10);
             }
         }
 
+        //wave update
         for (int i = 0; i < waves.Count; i++)
         {
             Wave w = waves[i];
             w.radius += dt * 8;
+            w.strength -= (dt / 2.0f);
             waves[i] = w;
 
-            if (waves[i].radius > width + width)
+            if (waves[i].radius > areaSize.x || w.strength < 0)
             {
                 waves.RemoveAt(i);
             }
@@ -190,9 +194,9 @@ public class Water : MonoBehaviour
                         Vector2 delta = w.center - new Vector2(i * squareSize.x, j * squareSize.y); //delta
                         float distance = delta.magnitude;
                         float distanceToCircle = Mathf.Abs(w.radius - distance);
-                        if (distanceToCircle < 4)
+                        if (distanceToCircle < w.strength)
                         {
-                            y[i, j] += 4 - distanceToCircle;
+                            y[i, j] += w.strength - distanceToCircle;
                         }
                     }
                 }

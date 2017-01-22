@@ -52,6 +52,8 @@ public class BallFalling : MonoBehaviour {
                 {
                     //p1 win
                     GameObject.Find("WinnerText").GetComponent<Text>().text = "P1 WINS";
+                    p1Points = 0;
+                    p2Points = 0;
                 }
             }
             else
@@ -64,6 +66,8 @@ public class BallFalling : MonoBehaviour {
                 {
                     //p2 win
                     GameObject.Find("WinnerText").GetComponent<Text>().text = "P2 WINS";
+                    p1Points = 0;
+                    p2Points = 0;
                 }
             }
         }
