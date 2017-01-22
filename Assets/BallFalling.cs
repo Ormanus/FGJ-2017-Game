@@ -8,6 +8,7 @@ public class BallFalling : MonoBehaviour {
     float timer;
     public Text P1Points;
     public Text P2Points;
+    public GameObject ExplosionPrefab;
 	// Use this for initialization
 	void Start () {
         p1Points = 0;
@@ -40,7 +41,7 @@ public class BallFalling : MonoBehaviour {
             }
         }
 
-            if (transform.position.y < -5.0f)
+        if (transform.position.y < -5.0f)
         {
             if(transform.position.x > 100)
             {
@@ -48,6 +49,8 @@ public class BallFalling : MonoBehaviour {
                 timer = 3.0f;
                 GameObject.Find("Water").GetComponent<Water>().Reset(3.0f);
                 GameObject.Find("WinnerText").GetComponent<Text>().text = "P1 SCORES";
+                Instantiate(ExplosionPrefab, transform, true);
+                GameObject.Find("Explosion(Clone)").transform.position = transform.position;
                 if (p1Points > 5)
                 {
                     //p1 win
@@ -62,6 +65,8 @@ public class BallFalling : MonoBehaviour {
                 timer = 3.0f;
                 GameObject.Find("Water").GetComponent<Water>().Reset(3.0f);
                 GameObject.Find("WinnerText").GetComponent<Text>().text = "P2 SCORES";
+                Instantiate(ExplosionPrefab, transform, true);
+                GameObject.Find("Explosion(Clone)").transform.position = transform.position;
                 if (p2Points > 5)
                 {
                     //p2 win
@@ -74,6 +79,7 @@ public class BallFalling : MonoBehaviour {
 	}
     void Respawn()
     {
+        Destroy(GameObject.Find("Explosion(Clone)"));
         Water water = GameObject.Find("Water").GetComponent<Water>();
         float x = water.areaSize.x / 2;
         float y = water.areaSize.y / 2;
