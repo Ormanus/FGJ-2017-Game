@@ -84,13 +84,13 @@ public class PlayerBehavior : MonoBehaviour {
     {
         if (Input.GetKey(_leftKey))
         {
-            if (_curRotation <= -_rotationSpeed)
+            if (_curRotation >= _rotationSpeed)
             {
-                _curRotation = -_rotationSpeed;
+                _curRotation = _rotationSpeed;
             }
             else
             {
-                _curRotation -= _rotationSpeed * _rotationSlowRate * Time.deltaTime;
+                _curRotation += _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
             /*
             if(transform.position.x <= _startPosition.x - _radius)
@@ -105,13 +105,13 @@ public class PlayerBehavior : MonoBehaviour {
         }
         else if (Input.GetKey(_rightKey))
         {
-            if (_curRotation >= _rotationSpeed)
+            if (_curRotation <= -_rotationSpeed)
             {
-                _curRotation = _rotationSpeed;
+                _curRotation = -_rotationSpeed;
             }
             else
             {
-                _curRotation += _rotationSpeed * _rotationSlowRate * Time.deltaTime;
+                _curRotation -= _rotationSpeed * _rotationSlowRate * Time.deltaTime;
             }
             /*
             if (transform.position.x >= _startPosition.x + _radius)
