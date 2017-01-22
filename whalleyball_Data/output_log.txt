@@ -14,14 +14,22 @@ Platform assembly: C:\Users\ollisal\Desktop\whalleyball_Data\Managed\UnityEngine
 Loading C:\Users\ollisal\Desktop\whalleyball_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\ollisal\Desktop\whalleyball_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\ollisal\Desktop\whalleyball_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.049 seconds
+- Completed reload, in  0.044 seconds
 Platform assembly: C:\Users\ollisal\Desktop\whalleyball_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\ollisal\Desktop\whalleyball_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.588825 ms
+UnloadTime: 0.543762 ms
+Mesh.vertices is too small. The supplied vertex array has less vertices than are referenced by the triangles array.
+ 
+(Filename:  Line: 821)
+
+Mesh.uv is out of bounds. The supplied array needs to be the same size as the Mesh.vertices array.
+ 
+(Filename:  Line: 924)
+
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1774 -> priority: 1 
-  Thread -> id: 1e1c -> priority: 1 
+  Thread -> id: 2340 -> priority: 1 
+  Thread -> id: 1140 -> priority: 1 

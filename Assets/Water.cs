@@ -248,13 +248,16 @@ public class Water : MonoBehaviour
             }
         }
 
-        Mesh mesh = new Mesh();
+        //Mesh mesh = new Mesh();
+        
+        
+
+        Mesh mesh = gameObject.GetComponent<MeshFilter>().mesh;
+
         mesh.name = "watermesh";
         mesh.vertices = vertices;
         mesh.triangles = indices;
         mesh.uv = uvs;
-
-        gameObject.GetComponent<MeshFilter>().mesh = mesh;
 
         //gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
     }
